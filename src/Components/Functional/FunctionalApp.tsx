@@ -24,70 +24,59 @@ const initialFishes = [
 ];
 
 export function FunctionalApp() {
-	const [score, setScore] = useState<{
-		correctCount: number;
-		incorrectCount: number;
-	}>({
-		correctCount: 0,
-		incorrectCount: 0,
-	});
-	const [gameFinished, setGameFinished] = useState(false);
+	const [correctAnswerCount, setCorrectAnswerCount] = useState(0);
+	const [incorrectAnswerCount, setIncorrectAnswerCount] = useState(0);
 	const [fishes, setFishes] = useState([...initialFishes]);
+	const [guess, setGuess] = useState("");
+
 	const activeFish = fishes[0];
+	const isGameFinished = fishes.length === 0;
 
-	const handleGameFinish = () => {
-		setGameFinished(true);
-	};
-
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const guessValidation = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		const formElement = event.target as HTMLFormElement;
-		const userInput = (
-			formElement.elements.namedItem("fish-guess") as HTMLInputElement
-		).value.toLowerCase();
-		const nextFishName = activeFish.name.toLowerCase();
-		const isCorrect = userInput === nextFishName;
+
+		const fishName = activeFish.name.toLowerCase();
+		const isCorrect = guess === fishName;
 
 		if (isCorrect) {
-			setScore((prevScore) => ({
-				...prevScore,
-				correctCount: prevScore.correctCount + 1,
-			}));
+			setCorrectAnswerCount((prevCount) => prevCount + 1);
 		} else {
-			setScore((prevScore) => ({
-				...prevScore,
-				incorrectCount: prevScore.incorrectCount + 1,
-			}));
+			setIncorrectAnswerCount((prevCount) => prevCount + 1);
 		}
 
 		const updatedFishes = fishes.filter(
 			(fish) => fish.name !== activeFish.name
 		);
 
-		if (updatedFishes.length === 0) {
-			handleGameFinish();
-		} else {
-			(event.target as HTMLFormElement).reset();
-		}
-
+		setGuess("");
 		setFishes(updatedFishes);
+	};
+
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setGuess(event.target.value);
 	};
 
 	return (
 		<>
-			{gameFinished ? (
+			{isGameFinished ? (
 				<>
-					<FunctionalFinalScore score={score} />
+					<FunctionalFinalScore
+						correctAnswerCount={correctAnswerCount}
+						incorrectAnswerCount={incorrectAnswerCount}
+					/>
 				</>
 			) : (
 				<>
 					<FunctionalScoreBoard
-						score={score}
+						correctAnswerCount={correctAnswerCount}
+						incorrectAnswerCount={incorrectAnswerCount}
 						answersLeft={fishes.map((fish) => fish.name)}
 					/>
 					<FunctionalGameBoard
 						activeFish={activeFish}
-						handleSubmit={handleSubmit}
+						guessValidation={guessValidation}
+						handleInputChange={handleInputChange}
+						guess={guess}
 					/>
 				</>
 			)}

@@ -2,17 +2,19 @@ import React from "react";
 import "./styles/score-board.css";
 
 interface ScoreBoardProps {
-	score: { correctCount: number; incorrectCount: number };
+	correctAnswerCount: number;
+	incorrectAnswerCount: number;
 	answersLeft: string[];
 }
+
 export class ClassScoreBoard extends React.Component<ScoreBoardProps> {
 	render() {
-		const { score, answersLeft } = this.props;
-		const { correctCount, incorrectCount } = score;
+		const { correctAnswerCount, incorrectAnswerCount, answersLeft } =
+			this.props;
 
 		return (
 			<div id="score-board">
-				<div>Incorrect 🔻: {incorrectCount}</div>
+				<div>Incorrect 🔻: {incorrectAnswerCount}</div>
 				<div id="choices-left">
 					{answersLeft.map((answer) => (
 						<div key={answer} className="choice">
@@ -20,7 +22,7 @@ export class ClassScoreBoard extends React.Component<ScoreBoardProps> {
 						</div>
 					))}
 				</div>
-				<div>Correct ✅: {correctCount}</div>
+				<div>Correct ✅: {correctAnswerCount}</div>
 			</div>
 		);
 	}

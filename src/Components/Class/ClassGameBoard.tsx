@@ -3,21 +3,33 @@ import "./styles/game-board.css";
 
 interface GameBoardProps {
 	activeFish: { name: string; url: string };
-	handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+	guessValidation: (event: React.FormEvent<HTMLFormElement>) => void;
+	handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	guess: string;
 }
 
 export class ClassGameBoard extends React.Component<GameBoardProps> {
+	static getActiveFish(nextProps: GameBoardProps) {
+		return { activeFish: nextProps.activeFish };
+	}
+
 	render() {
-		const { activeFish, handleSubmit } = this.props;
+		const { activeFish, guessValidation, handleInputChange, guess } =
+			this.props;
 
 		return (
 			<div id="game-board">
 				<div id="fish-container">
 					<img src={activeFish.url} alt={activeFish.name} />
 				</div>
-				<form id="fish-guess-form" onSubmit={handleSubmit}>
+				<form id="fish-guess-form" onSubmit={guessValidation}>
 					<label htmlFor="fish-guess">What kind of fish is this?</label>
-					<input type="text" name="fish-guess" />
+					<input
+						type="text"
+						name="fish-guess"
+						value={guess}
+						onChange={handleInputChange}
+					/>
 					<input type="submit" />
 				</form>
 			</div>

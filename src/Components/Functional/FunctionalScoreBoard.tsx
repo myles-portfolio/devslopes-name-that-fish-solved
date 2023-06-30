@@ -1,16 +1,19 @@
 import "./styles/score-board.css";
 
 interface ScoreBoardProps {
-	score: { correctCount: number; incorrectCount: number };
+	correctAnswerCount: number;
+	incorrectAnswerCount: number;
 	answersLeft: string[];
 }
 
-export function FunctionalScoreBoard({ score, answersLeft }: ScoreBoardProps) {
-	const { correctCount, incorrectCount } = score;
-
+export function FunctionalScoreBoard({
+	correctAnswerCount,
+	incorrectAnswerCount,
+	answersLeft,
+}: ScoreBoardProps) {
 	return (
 		<div id="score-board">
-			<div>Incorrect 🔻: {incorrectCount}</div>
+			<div>Incorrect 🔻: {incorrectAnswerCount}</div>
 			<div id="choices-left">
 				{answersLeft.map((answer) => (
 					<div key={answer} className="choice">
@@ -18,7 +21,7 @@ export function FunctionalScoreBoard({ score, answersLeft }: ScoreBoardProps) {
 					</div>
 				))}
 			</div>
-			<div>Correct ✅: {correctCount}</div>
+			<div>Correct ✅: {correctAnswerCount}</div>
 		</div>
 	);
 }

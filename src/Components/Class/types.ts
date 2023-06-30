@@ -1,19 +1,11 @@
-export type Score = {
-	correctCount: number;
-	incorrectCount: number;
-};
-
 export type Props = unknown;
 
 export type State = {
-	score: Score;
-	gameFinished: boolean;
+	correctAnswerCount: number;
+	incorrectAnswerCount: number;
+	guess: string;
 	fishes: Array<{
 		name: string;
 		url: string;
 	}>;
-	activeFish: {
-		name: string;
-		url: string;
-	};
 };
