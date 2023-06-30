@@ -1,9 +1,10 @@
-import { Component } from "react";
+import React from "react";
+import "./styles/final-score.css";
+
 interface FinalScoreProps {
 	score: { correctCount: number; incorrectCount: number };
 }
-
-export class ClassFinalScore extends Component<FinalScoreProps> {
+export class ClassFinalScore extends React.Component<FinalScoreProps> {
 	render() {
 		const { score } = this.props;
 

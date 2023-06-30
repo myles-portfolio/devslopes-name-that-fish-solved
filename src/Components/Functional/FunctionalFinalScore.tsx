@@ -1,10 +1,10 @@
 import "./styles/final-score.css";
 
-interface FinalScorePS {
+interface FinalScoreProps {
 	score: { correctCount: number; incorrectCount: number };
 }
 
-export const FunctionalFinalScore: React.FC<FinalScorePS> = ({ score }) => {
+export function FunctionalFinalScore({ score }: FinalScoreProps) {
 	return (
 		<div id="final-score">
 			<h1>Your Final Score Was</h1>
@@ -15,4 +15,4 @@ export const FunctionalFinalScore: React.FC<FinalScorePS> = ({ score }) => {
 			</div>
 		</div>
 	);
-};
+}

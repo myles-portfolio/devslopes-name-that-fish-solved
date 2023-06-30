@@ -1,24 +1,16 @@
-import { useEffect, useState } from "react";
 import "./styles/score-board.css";
 
-interface ScorePS {
+interface ScoreBoardProps {
 	score: { correctCount: number; incorrectCount: number };
-	fishName: string;
+	answersLeft: string[];
 }
 
-export function FunctionalScoreBoard({ score, fishName }: ScorePS) {
-	const initialAnswersLeft = ["trout", "salmon", "tuna", "shark"];
-	const [answersLeft, setAnswersLeft] = useState(initialAnswersLeft);
-
-	useEffect(() => {
-		setAnswersLeft((prevAnswersLeft) =>
-			prevAnswersLeft.filter((answer) => answer !== fishName)
-		);
-	}, [fishName]);
+export function FunctionalScoreBoard({ score, answersLeft }: ScoreBoardProps) {
+	const { correctCount, incorrectCount } = score;
 
 	return (
 		<div id="score-board">
-			<div>Incorrect 🔻: {score.incorrectCount}</div>
+			<div>Incorrect 🔻: {incorrectCount}</div>
 			<div id="choices-left">
 				{answersLeft.map((answer) => (
 					<div key={answer} className="choice">
@@ -26,7 +18,7 @@ export function FunctionalScoreBoard({ score, fishName }: ScorePS) {
 					</div>
 				))}
 			</div>
-			<div>Correct ✅: {score.correctCount}</div>
+			<div>Correct ✅: {correctCount}</div>
 		</div>
 	);
 }
